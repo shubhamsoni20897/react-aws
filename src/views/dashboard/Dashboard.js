@@ -80,31 +80,28 @@ const Dashboard = () => {
 React.useEffect(()=>{},[categoryName])
   const handleClick = (data) => {
     getStateWiseData(data)
-    console.log('data', data)
     // setCategoryName(data.diseaseName)
   }
 
   const getDiseases = () => {
     const data = disease
-    console.log(data)
+      setDiseases(data)
 
-    axios.get('http://localhost:4000/getDisease').then((res) => {
-      console.log(res.data)
-      setDiseases(res.data)
+    // axios.get('http://localhost:4000/getDisease').then((res) => {
+    //   console.log(res.data)
       
-    }).catch((err) => {
-      console.log('err', err.response)
-    })
+    // }).catch((err) => {
+    //   console.log('err', err.response)
+    // })
   }
 
   const getStateWiseData = (data1) => {
     setCategoryName(data1.diseaseName)
     const res = details
-    console.log('disease1=>',res)
+    // console.log('disease1=>',res)
 
 setLoader(true)
     // axios.get(`http://localhost:4000/getStateWiseData/${data._id}`).then((res) => {
-      console.log('=>',res.data)
       setResponse(res.data)
       const label = []
       const data = []
