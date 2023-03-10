@@ -44,7 +44,8 @@ const Login = (props) => {
   }
   const onSubmit = async () => {
     const requestData = { email: userId, password }
-    await props.login(requestData, onSuccess)
+    props.history.push("/dashboard")
+    // await props.login(requestData, onSuccess)
 
   }
   return (

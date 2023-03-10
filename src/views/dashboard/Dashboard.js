@@ -53,6 +53,7 @@ import avatar6 from 'src/assets/images/avatars/6.jpg'
 import axios from 'axios'
 import { Chart } from 'src/pages/charts/chart'
 import Loader from 'react-loader-spinner'
+import { details, disease } from './mockdata'
 
 const DashboardComp = lazy(() => import('../../pages/dashboard/index'))
 const WidgetsDropdown = lazy(() => import('../widgets/WidgetsDropdown.js'))
@@ -84,33 +85,39 @@ React.useEffect(()=>{},[categoryName])
   }
 
   const getDiseases = () => {
+    const data = disease
+    console.log(data)
+
     axios.get('http://localhost:4000/getDisease').then((res) => {
       console.log(res.data)
-      
       setDiseases(res.data)
+      
     }).catch((err) => {
       console.log('err', err.response)
     })
   }
 
-  const getStateWiseData = (data) => {
-    setCategoryName(data.diseaseName)
+  const getStateWiseData = (data1) => {
+    setCategoryName(data1.diseaseName)
+    const res = details
+    console.log('disease1=>',res)
+
 setLoader(true)
-    axios.get(`http://localhost:4000/getStateWiseData/${data._id}`).then((res) => {
-      console.log(res.data.data)
-      setResponse(res.data.data)
+    // axios.get(`http://localhost:4000/getStateWiseData/${data._id}`).then((res) => {
+      console.log('=>',res.data)
+      setResponse(res.data)
       const label = []
       const data = []
       setLoader(false)
 
-      res.data.data.stateGraph?.map((value) => {
+      res.data.stateGraph?.map((value) => {
         label.push(value._id)
         data.push(value.count)
 
       })
       const labelPie = []
       const dataPie = []
-      res.data.data.ageGraph?.map((value) => {
+      res.data.ageGraph?.map((value) => {
         labelPie.push(value._id)
         dataPie.push(value.count)
 
@@ -120,11 +127,11 @@ setLoader(true)
       setPieGraphLabel(labelPie)
       setPieGraphData(dataPie)
       setStateWiseData(res.data)
-    }).catch((err) => {
-      setLoader(false)
+    // }).catch((err) => {
+    //   setLoader(false)
 
-      console.log('err', err)
-    })
+    //   console.log('err', err)
+    // })
   }
   const calcPercentage = (partialValue, totalValue) => {
     return parseFloat((partialValue / totalValue) * 100).toFixed(2)
